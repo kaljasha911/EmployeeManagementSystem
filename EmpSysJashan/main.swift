@@ -7,13 +7,16 @@
 
 import Foundation
 
+// Function to read a valid string (name) input from the user
 func readString(prompt: String) -> String {
     while true {
         print(prompt, terminator: "")
         if let input = readLine(), !input.trimmingCharacters(in: .whitespaces).isEmpty {
+            // Regular expression to allow only letters, spaces, hyphens, and apostrophes
             let validNamePattern = "^[A-Za-z\\s-']+$"
             let predicate = NSPredicate(format: "SELF MATCHES %@", validNamePattern)
             if predicate.evaluate(with: input) {
+                // Return cleaned and capitalized name if valid
                 return input.trimmingCharacters(in: .whitespaces).capitalized
             } else {
                 print("Correction required, please try again. Name can only contain letters, spaces, or hyphens.")
@@ -24,6 +27,7 @@ func readString(prompt: String) -> String {
     }
 }
 
+// Function to read a valid non-negative integer from the user
 func readInt(prompt: String) -> Int {
     while true {
         print(prompt, terminator: "")
@@ -35,6 +39,7 @@ func readInt(prompt: String) -> Int {
     }
 }
 
+// Function to read a valid non-negative double (decimal number) from the user
 func readDouble(prompt: String) -> Double {
     while true {
         print(prompt, terminator: "")
@@ -46,12 +51,13 @@ func readDouble(prompt: String) -> Double {
     }
 }
 
-
+// Main function that drives the Employee Management System
 func main() {
-    let manager = EmpManager()
+    let manager = EmpManager() // Create an instance of the employee manager
 
-    // Main application loop
+    // Infinite loop for the menu system
     while true {
+        // Display the main menu
         print("\n===== Employee Management System =====")
         print("1. Add full-time employee")
         print("2. Add part-time employee")
@@ -61,11 +67,11 @@ func main() {
         print("6. Exit")
         print("====================================")
 
-        let choice = readInt(prompt: "Enter your choice: ")
+        let choice = readInt(prompt: "Enter your choice: ") // Get user's menu selection
 
         switch choice {
         case 1:
-            // Add Full-Time Employee
+            // Case 1: Add a full-time employee
             print("\n-- Adding Full-Time Employee --")
             let name = readString(prompt: "Enter name: ")
             let id = readInt(prompt: "Enter ID: ")
@@ -79,7 +85,7 @@ func main() {
             }
 
         case 2:
-            // Add Part-Time Employee
+            // Case 2: Add a part-time employee
             print("\n-- Adding Part-Time Employee --")
             let name = readString(prompt: "Enter name: ")
             let id = readInt(prompt: "Enter ID: ")
@@ -94,23 +100,22 @@ func main() {
             }
 
         case 3:
-            // Display All Employees
+            // Case 3: Display all employees
             manager.displayAllEmployees()
-            
+
         case 4:
-            // Remove Employee
+            // Case 4: Remove an employee by ID
             print("\n-- Remove Employee --")
             let id = readInt(prompt: "Enter ID to remove: ")
             if manager.searchEmployee(by: id) != nil {
                 manager.removeEmployee(by: id)
                 print("Employee with ID \(id) has been removed.")
             } else {
-                 print("Employee with ID \(id) not found.")
+                print("Employee with ID \(id) not found.")
             }
 
-
         case 5:
-            // Search for Employee
+            // Case 5: Search for an employee by ID
             print("\n-- Search for Employee --")
             let id = readInt(prompt: "Enter ID to search: ")
             if let employee = manager.searchEmployee(by: id) {
@@ -121,18 +126,19 @@ func main() {
             }
 
         case 6:
+            // Case 6: Exit the application
             let confirm = readString(prompt: "Are you sure you want to exit? (y/n): ")
             if confirm.lowercased() == "y" {
                 print("Exiting application. Goodbye!")
-                return
-            } // Exit the main function, which terminates the program.
+                return // Exit the main loop and end the program
+            }
 
         default:
-            // Handle invalid menu choices
+            // Handle invalid menu input
             print("Invalid choice. Please select an option from 1 to 6.")
         }
     }
 }
 
-// Start the application by calling the main function.
+// Start the application by calling the main function
 main()

@@ -8,18 +8,21 @@
 
 import Foundation
 
-// Taxable protocol
+// A protocol that requires conforming types to implement a method to calculate tax.
 protocol Taxable {
     func calculateTax() -> Double
 }
 
-// Extensions to conform to Taxable
+// Extension to add tax calculation for full-time employees.
+// Full-time employees are taxed at 20% of their salary.
 extension FullTimeEmployee: Taxable {
     func calculateTax() -> Double {
         return salary * 0.20
     }
 }
 
+// Extension to add tax calculation for part-time employees.
+// Part-time employees are taxed at 10% of their salary.
 extension PartTimeEmployee: Taxable {
     func calculateTax() -> Double {
         return salary * 0.10
