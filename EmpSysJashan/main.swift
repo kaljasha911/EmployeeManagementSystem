@@ -11,7 +11,13 @@ func readString(prompt: String) -> String {
     while true {
         print(prompt, terminator: "")
         if let input = readLine(), !input.trimmingCharacters(in: .whitespaces).isEmpty {
-            return input
+            let validNamePattern = "^[A-Za-z\\s-']+$"
+            let predicate = NSPredicate(format: "SELF MATCHES %@", validNamePattern)
+            if predicate.evaluate(with: input) {
+                return input.trimmingCharacters(in: .whitespaces).capitalized
+            } else {
+                print("Correction required, please try again. Name can only contain letters, spaces, or hyphens.")
+            }
         } else {
             print("Correction required, please try again. Input cannot be empty.")
         }
@@ -21,7 +27,7 @@ func readString(prompt: String) -> String {
 func readInt(prompt: String) -> Int {
     while true {
         print(prompt, terminator: "")
-        if let input = readLine(), let number = Int(input) {
+        if let input = readLine(), let number = Int(input), number >= 0 {
             return number
         } else {
             print("Correction required, please try again. Please enter a valid whole number.")
@@ -32,7 +38,7 @@ func readInt(prompt: String) -> Int {
 func readDouble(prompt: String) -> Double {
     while true {
         print(prompt, terminator: "")
-        if let input = readLine(), let number = Double(input) {
+        if let input = readLine(), let number = Double(input), number >= 0 {
             return number
         } else {
             print("Correction required, please try again. Please enter a valid number.")
@@ -115,9 +121,11 @@ func main() {
             }
 
         case 6:
-            // Exit
-            print("Exiting application. Goodbye!")
-            return // Exit the main function, which terminates the program.
+            let confirm = readString(prompt: "Are you sure you want to exit? (y/n): ")
+            if confirm.lowercased() == "y" {
+                print("Exiting application. Goodbye!")
+                return
+            } // Exit the main function, which terminates the program.
 
         default:
             // Handle invalid menu choices
