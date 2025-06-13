@@ -1,9 +1,10 @@
+//  Author: Jashan Kalsi - 991494313
+//  Course: INFO10229 Mobile Computing
+//  Date: 2025-06-11
 //
+//  Employee Management System - Assignment 02
 //  Taxable.swift
 //  EmpSysJashan
-//
-//  Created by Jashan Kalsi on 2025-06-12.
-//
 
 import Foundation
 
